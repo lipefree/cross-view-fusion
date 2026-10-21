@@ -20,12 +20,12 @@ from cross_view_fusion import CrossViewFusion
 
 fusion = CrossViewFusion(
     in_channels=(64, 96),  # or one integer when both encoders output the same C
-    feature_size=(16, 24), # H, W; one integer means a square
-    embed_dim=64,         # fused output channels; divisible by 4 and num_heads
-    patch_size=(4, 4),    # feature cells, not original image pixels
+    feature_size=(16, 24),  # H, W; one integer means a square
+    embed_dim=64,  # fused output channels; divisible by 4 and num_heads
+    patch_size=(4, 4),  # feature cells, not original image pixels
     num_heads=4,
     num_points=4,
-    hidden_dim=32,        # defaults to max(embed_dim // 2, 1)
+    hidden_dim=32,  # defaults to max(embed_dim // 2, 1)
 )
 ```
 
@@ -50,19 +50,19 @@ import torch
 from torch import nn
 from cross_view_fusion import CrossViewFusion
 
+
 class MyModel(nn.Module):
     def __init__(self):
         super().__init__()
         self.encoder_a = nn.Conv2d(3, 16, 3, padding=1)
         self.encoder_b = nn.Conv2d(5, 24, 3, padding=1)
-        self.fusion = CrossViewFusion(
-            (16, 24), (16, 24), embed_dim=32, patch_size=4, num_heads=4
-        )
+        self.fusion = CrossViewFusion((16, 24), (16, 24), embed_dim=32, patch_size=4, num_heads=4)
         self.head = nn.Conv2d(32, 3, 1)
 
     def forward(self, a, b):
         features = self.fusion(self.encoder_a(a), self.encoder_b(b))
         return self.head(features)
+
 
 model = MyModel()
 optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3)
@@ -103,10 +103,12 @@ or a complete explanation of the model.
 ```python
 from cross_view_fusion import CrossViewFusion, MultiScaleFusion
 
-fusion = MultiScaleFusion([
-    CrossViewFusion(32, (16, 24), embed_dim=32, patch_size=4, num_heads=4),
-    CrossViewFusion((64, 96), (8, 12), embed_dim=64, patch_size=2, num_heads=4),
-])
+fusion = MultiScaleFusion(
+    [
+        CrossViewFusion(32, (16, 24), embed_dim=32, patch_size=4, num_heads=4),
+        CrossViewFusion((64, 96), (8, 12), embed_dim=64, patch_size=2, num_heads=4),
+    ]
+)
 # outputs, weights = fusion(pyramid_a, pyramid_b, return_weights=True)
 ```
 
@@ -125,8 +127,9 @@ resolutions, and Apple MPS behavior must be measured in your environment.
 Save the constructor configuration alongside the state dictionary:
 
 ```python
-config = dict(in_channels=(16, 24), feature_size=(8, 12), embed_dim=32,
-              patch_size=(2, 3), num_heads=4)
+config = dict(
+    in_channels=(16, 24), feature_size=(8, 12), embed_dim=32, patch_size=(2, 3), num_heads=4
+)
 module = CrossViewFusion(**config)
 torch.save({"config": config, "state_dict": module.state_dict()}, "fusion.pt")
 checkpoint = torch.load("fusion.pt", map_location="cpu", weights_only=True)
