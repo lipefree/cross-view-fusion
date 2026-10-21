@@ -23,14 +23,20 @@ OSM tiles, or full localization training/evaluation pipelines.
 
 ## Install
 
-Requires Python 3.10+ and PyTorch 2.4+. Install a PyTorch build appropriate for your
-hardware, then install this package:
+Requires Python 3.10+ and PyTorch 2.4+. Install
+[uv](https://docs.astral.sh/uv/getting-started/installation/), then create the
+project environment (the commands below use Python 3.12):
 
 ```bash
 git clone https://github.com/lipefree/cross-view-fusion.git
 cd cross-view-fusion
-python -m pip install -e .
+uv sync --python 3.12
 ```
+
+`uv sync` creates `.venv` and installs the package and its dependencies. Use
+`uv run` to run commands in that environment without activating it. For a
+specific CUDA or CPU PyTorch build, follow the
+[uv PyTorch guide](https://docs.astral.sh/uv/guides/integration/pytorch/).
 
 The only runtime dependency is PyTorch. No MMCV, custom CUDA extension, backbone,
 or dataset download is required. CPU is the default for the examples. GPU support
@@ -79,8 +85,8 @@ and checkpoint instructions are in the [integration guide](docs/integration.md).
 ## Runnable examples
 
 ```bash
-python examples/minimal.py
-python examples/multiscale.py
+uv run python examples/minimal.py
+uv run python examples/multiscale.py
 ```
 
 The first example runs a training step through two small encoders, fusion, and a
@@ -90,11 +96,11 @@ data and run without external files or network access after installation.
 ## Development
 
 ```bash
-python -m pip install -e '.[dev]'
-python -m pytest
-ruff check .
-ruff format --check .
-python -m build
+uv sync --extra dev
+uv run --extra dev pytest
+uv run --extra dev ruff check .
+uv run --extra dev ruff format --check .
+uv build
 ```
 
 Tests cover patch equations and spatial placement, bilinear sampling, attention
