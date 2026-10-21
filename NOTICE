@@ -1,0 +1,28 @@
+Cross-View Fusion
+
+This package was reconstructed from an earlier CCVPE-based research backup and
+the method described in "Fusing Satellite Imagery and Planimetric Maps for
+Cross-View Localization" (Quang Long Ho Ngo, Zimin Xia, Alexandre Alahi, 2026).
+
+The release retains the GNU General Public License version 3 supplied in
+CCVPE/LICENSE in that backup. The LICENSE file is preserved verbatim. New package
+code and modifications are distributed under GPL-3.0-only. This does not relicense
+the paper or external projects.
+
+Research lineage and acknowledgments:
+- CCVPE: Zimin Xia, Olaf Booij, Julian F. P. Kooij.
+  https://arxiv.org/abs/2303.05915
+- Deformable DETR: deformable attention methodology.
+  https://arxiv.org/abs/2010.04159
+- OpenMMLab MMCV: the attention operator used by the backup; its public source
+  was consulted for sampling conventions and initialization. No MMCV source file
+  or compiled extension is bundled.
+  https://github.com/open-mmlab/mmcv
+- Facebook Research DETR: the backup's positional-encoding file attributes
+  Facebook, Inc. and its affiliates, and modifications by Bowen Cheng. The
+  release uses newly written cell-centered sine-encoding code.
+  https://github.com/facebookresearch/detr
+
+The package contains newly structured fusion code, not the original CCVPE model,
+EfficientNet, OrienterNet/maploc, MultiMAE, or dataset implementations. Changes
+and reconstruction decisions are recorded in docs/implementation.md.

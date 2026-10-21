@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use these modules, please cite the accompanying paper."
+title: "Cross-View Fusion"
+type: software
+version: 0.1.0
+license: GPL-3.0-only
+repository-code: "https://github.com/lipefree/cross-view-fusion"
+authors:
+  - family-names: Ngo
+    given-names: Quang Long Ho
+  - family-names: Xia
+    given-names: Zimin
+  - family-names: Alahi
+    given-names: Alexandre
+preferred-citation:
+  type: article
+  title: "Fusing Satellite Imagery and Planimetric Maps for Cross-View Localization"
+  authors:
+    - family-names: Ngo
+      given-names: Quang Long Ho
+    - family-names: Xia
+      given-names: Zimin
+    - family-names: Alahi
+      given-names: Alexandre
+  year: 2026
+  doi: "10.48550/arXiv.2606.10166"
+  url: "https://arxiv.org/abs/2606.10166"
